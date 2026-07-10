@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  catalog-service:
+    build:
+      context: ./Catalog_Server
+    image: bazar/catalog-service:1.0
+    container_name: catalog-service
+    ports:
+      - "5000:5000"
+    environment:
+      FRONTEND_SERVER: frontend-service
+    restart: unless-stopped
+
+  order-service:
+    build:
+      context: ./Order_Server
+    image: bazar/order-service:1.0
+    container_name: order-service
+    ports:
+      - "5001:5001"
+    environment:
+      CATALOG_SERVER: catalog-service
+    depends_on:
+      - catalog-service
+    restart: unless-stopped
+
+  frontend-service:
+    build:
+      context: ./Frontend_Server
+    image: bazar/frontend-service:1.0
+    container_name: frontend-service
+    ports:
+      - "5002:5002"
+    environment:
+      CATALOG_SERVER: catalog-service
+      ORDER_SERVER: order-service
+    depends_on:
+      - catalog-service
+      - order-service
+    restart: unless-stopped
