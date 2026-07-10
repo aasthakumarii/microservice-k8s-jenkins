@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: catalog
+  namespace: {{ .Values.namespace }}
+
+spec:
+  selector:
+    app: catalog
+
+  ports:
+  - port: 80
+    targetPort: {{ .Values.catalog.port }}
+
+  type: NodePort

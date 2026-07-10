@@ -1,0 +1,16 @@
+namespace: bazar
+
+frontend:
+  image: aasthakumarii/frontend-service:1.2
+  replicas: 1
+  port: 5002
+
+catalog:
+  image: aasthakumarii/catalog-service:1.0
+  replicas: 1
+  port: 5000
+
+order:
+  image: aasthakumarii/order-service:1.0
+  replicas: 1
+  port: 5001
