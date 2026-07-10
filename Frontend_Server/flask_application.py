@@ -7,5 +7,5 @@ app = Flask(__name__)
 CATALOG_SERVER = os.getenv("CATALOG_SERVER", "catalog-service")
 ORDER_SERVER = os.getenv("ORDER_SERVER", "order-service")
 
-CATALOG_PORT = 5000
-ORDER_PORT = 5001
+CATALOG_PORT = 80
+ORDER_PORT = 80
