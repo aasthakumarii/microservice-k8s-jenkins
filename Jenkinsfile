@@ -79,21 +79,6 @@ pipeline {
             }
         }
 
-        stage('Update Helm Values') {
-            steps {
-                sh '''
-                sed -i "s|frontend-service:.*|frontend-service:${IMAGE_TAG}|" helm/bazar/values.yaml
-                sed -i "s|catalog-service:.*|catalog-service:${IMAGE_TAG}|" helm/bazar/values.yaml
-                sed -i "s|order-service:.*|order-service:${IMAGE_TAG}|" helm/bazar/values.yaml
-                '''
-            }
-        }
-
-        stage('Show Updated Helm Values') {
-            steps {
-                sh 'cat helm/bazar/values.yaml'
-            }
-        }
         stage('Update Helm Chart') {
             steps {
                 withCredentials([usernamePassword(
