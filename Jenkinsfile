@@ -6,7 +6,7 @@ pipeline {
         FRONTEND_IMAGE = "aasthakumarii/frontend-service"
         CATALOG_IMAGE  = "aasthakumarii/catalog-service"
         ORDER_IMAGE    = "aasthakumarii/order-service"
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
@@ -78,6 +78,17 @@ pipeline {
                 sh 'docker push $ORDER_IMAGE:$IMAGE_TAG'
             }
         }
+
+        stage('Update Helm Values') {
+            steps {
+                sh '''
+                sed -i "s|frontend-service:.*|frontend-service:${IMAGE_TAG}|" helm/bazar/values.yaml
+                sed -i "s|catalog-service:.*|catalog-service:${IMAGE_TAG}|" helm/bazar/values.yaml
+                sed -i "s|order-service:.*|order-service:${IMAGE_TAG}|" helm/bazar/values.yaml
+                '''
+            }
+        }
+
         stage('Deploy to Kubernetes') {
             steps {
                 dir('helm/bazar') {

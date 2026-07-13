@@ -21,6 +21,7 @@ spec:
       containers:
         - name: catalog
           image: {{ .Values.catalog.image }}
+          imagePullPolicy: Always
 
           ports:
             - containerPort: {{ .Values.catalog.port }}

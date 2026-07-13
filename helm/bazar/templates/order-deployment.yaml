@@ -21,6 +21,7 @@ spec:
       containers:
         - name: order
           image: {{ .Values.order.image }}
+          imagePullPolicy: Always
 
           ports:
             - containerPort: {{ .Values.order.port }}
