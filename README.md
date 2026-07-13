@@ -299,6 +299,8 @@ I extended it into a complete DevOps and GitOps project by implementing:
 - Resource requests & limits
 - Rolling updates
 - ImagePullPolicy Always configuration
+- Docker Compose
+- Basic Kubernetes Support
 
 ---
 
@@ -306,8 +308,7 @@ I extended it into a complete DevOps and GitOps project by implementing:
 
 - Flask Microservices
 - SQLite Database
-- Docker Compose
-- Basic Kubernetes Support
+
 
 ---
 
