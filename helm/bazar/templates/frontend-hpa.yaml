@@ -13,6 +13,13 @@ spec:
   minReplicas: {{ .Values.frontend.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.frontend.autoscaling.maxReplicas }}
 
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 0
+
+    scaleDown:
+      stabilizationWindowSeconds: 30
+
   metrics:
     - type: Resource
       resource:
