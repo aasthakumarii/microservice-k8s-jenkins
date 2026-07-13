@@ -1,0 +1,23 @@
+{{- if .Values.catalog.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: catalog-hpa
+  namespace: {{ .Values.namespace }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: catalog
+
+  minReplicas: {{ .Values.catalog.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.catalog.autoscaling.maxReplicas }}
+
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.catalog.autoscaling.targetCPUUtilizationPercentage }}
+{{- end }}
