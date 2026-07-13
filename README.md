@@ -283,6 +283,7 @@ This project was originally a Flask microservices application.
 I extended it into a complete DevOps and GitOps project by implementing:
 
 - Docker containerization
+- Docker Compose
 - Kubernetes deployment
 - Helm charts
 - Custom Jenkins Docker image
@@ -299,8 +300,6 @@ I extended it into a complete DevOps and GitOps project by implementing:
 - Resource requests & limits
 - Rolling updates
 - ImagePullPolicy Always configuration
-- Docker Compose
-- Basic Kubernetes Support
 
 ---
 
