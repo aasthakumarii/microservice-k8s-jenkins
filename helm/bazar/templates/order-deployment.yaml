@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: order
+  namespace: {{ .Values.namespace }}
+
+spec:
+  replicas: {{ .Values.order.replicas }}
+
+  selector:
+    matchLabels:
+      app: order
+
+  template:
+    metadata:
+      labels:
+        app: order
+
+    spec:
+      containers:
+        - name: order
+          image: {{ .Values.order.image }}
+
+          ports:
+            - containerPort: {{ .Values.order.port }}
+
+          env:
+            - name: CATALOG_SERVER
+              value: catalog

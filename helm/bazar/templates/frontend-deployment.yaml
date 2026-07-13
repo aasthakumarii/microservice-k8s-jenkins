@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: frontend
+  namespace: {{ .Values.namespace }}
+
+spec:
+  replicas: {{ .Values.frontend.replicas }}
+
+  selector:
+    matchLabels:
+      app: frontend
+
+  template:
+    metadata:
+      labels:
+        app: frontend
+
+    spec:
+      containers:
+        - name: frontend
+          image: {{ .Values.frontend.image }}
+
+          ports:
+            - containerPort: {{ .Values.frontend.port }}
+
+          env:
+            - name: CATALOG_SERVER
+              value: catalog
+
+            - name: ORDER_SERVER
+              value: order
