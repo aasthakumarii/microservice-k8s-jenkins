@@ -1,7 +1,7 @@
 namespace: bazar
 
 frontend:
-  image: aasthakumarii/frontend-service:4
+  image: aasthakumarii/frontend-service:5
   replicas: 1
   port: 5002
 
@@ -12,7 +12,7 @@ frontend:
     targetCPUUtilizationPercentage: 60
 
 catalog:
-  image: aasthakumarii/catalog-service:4
+  image: aasthakumarii/catalog-service:5
   replicas: 1
   port: 5000
 
@@ -23,7 +23,7 @@ catalog:
     targetCPUUtilizationPercentage: 60
 
 order:
-  image: aasthakumarii/order-service:4
+  image: aasthakumarii/order-service:5
   replicas: 1
   port: 5001
 
