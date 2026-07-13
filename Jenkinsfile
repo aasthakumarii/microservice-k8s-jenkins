@@ -78,5 +78,15 @@ pipeline {
                 sh 'docker push $ORDER_IMAGE:$IMAGE_TAG'
             }
         }
+        stage('Deploy to Kubernetes') {
+            steps {
+                dir('helm/bazar') {
+                    sh '''
+                        helm upgrade --install bazar . \
+                        --namespace default
+                    '''
+                }
+            }
+        }
     }
 }
