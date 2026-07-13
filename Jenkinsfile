@@ -89,12 +89,32 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        stage('Show Updated Helm Values') {
             steps {
-                dir('helm/bazar') {
+                sh 'cat helm/bazar/values.yaml'
+            }
+        }
+        stage('Update Helm Chart') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-creds',
+                    usernameVariable: 'GIT_USER',
+                    passwordVariable: 'GIT_PASS'
+                )]) {
+
                     sh '''
-                        helm upgrade --install bazar . \
-                        --namespace default
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@local"
+
+                        sed -i "s|image: aasthakumarii/frontend-service:.*|image: aasthakumarii/frontend-service:${BUILD_NUMBER}|" helm/bazar/values.yaml
+                        sed -i "s|image: aasthakumarii/catalog-service:.*|image: aasthakumarii/catalog-service:${BUILD_NUMBER}|" helm/bazar/values.yaml
+                        sed -i "s|image: aasthakumarii/order-service:.*|image: aasthakumarii/order-service:${BUILD_NUMBER}|" helm/bazar/values.yaml
+
+                        git add helm/bazar/values.yaml
+
+                        git commit -m "Update image tag to ${BUILD_NUMBER}" || true
+
+                        git push https://${GIT_USER}:${GIT_PASS}@github.com/aasthakumarii/microservice-k8s-jenkins.git HEAD:main
                     '''
                 }
             }
